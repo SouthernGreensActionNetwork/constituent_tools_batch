@@ -17,8 +17,8 @@ resources:
     - container: mysqlforward
       image: registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
       endpoint: gl_registry
-      ports:
-        - 3306
+      # ports:
+      #  - 3306
       # options: --dns 192.168.1.1
       env:
         DIGITALOCEAN_ACCESS_TOKEN: $(DIGITALOCEAN_ACCESS_TOKEN)
@@ -41,7 +41,10 @@ stages:
         pool: PodmanAgents
         container: constituent_tools
         services:
-          mysqlforward: mysqlforward
+          mysqlforward:
+            image: mysqlforward
+            ports:
+            - 3306/tcp          
         strategy:
           runOnce:
             deploy:
