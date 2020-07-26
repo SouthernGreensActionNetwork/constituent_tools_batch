@@ -24,6 +24,7 @@ resources:
         DIGITALOCEAN_ACCESS_TOKEN: $(DIGITALOCEAN_ACCESS_TOKEN)
     - container: constituent_tools
       image: registry.gitlab.com/sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest
+      endpoint: gl_registry
       env:
         PG_DATABASE: $(PG_DATABASE)
         PG_HOST: $(PG_HOST)
