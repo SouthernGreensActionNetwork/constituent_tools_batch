@@ -4,8 +4,7 @@ steps:
   - script: echo Hello, world!
     displayName: 'Run a one-line script'
   - script: |
-      apt-get -y install telnet
-      telnet mysqlforward 3307
+      nc -z -v -w5 mysqlforward 3307
       echo Add other tasks to build, test, and deploy your project.
       echo See https://aka.ms/yaml
     displayName: 'Run a multi-line script'
