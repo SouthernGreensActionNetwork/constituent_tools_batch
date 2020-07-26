@@ -18,7 +18,7 @@ resources:
       image: registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
       # image: registry.gitlab.com/sgan/containers/core/jamjon3/doctl_container:latest
       endpoint: gl_registry
-      options: --entrypoint=""
+      # options: --entrypoint=""
       ports:
         - 3306:3307
       env:
