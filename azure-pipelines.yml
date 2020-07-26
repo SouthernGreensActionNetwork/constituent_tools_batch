@@ -18,8 +18,6 @@ resources:
       image: registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
       endpoint: gl_registry
       options: --dns 192.168.1.1
-      ports:
-        - 3306:3306
       env:
         DIGITALOCEAN_ACCESS_TOKEN: $(DIGITALOCEAN_ACCESS_TOKEN)
     - container: constituent_tools
