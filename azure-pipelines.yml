@@ -17,7 +17,6 @@ resources:
     - container: mysqlforward
       image: registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
       endpoint: gl_registry
-      options: --network=host
       ports:
         - 3306:3306
       env:
@@ -25,7 +24,6 @@ resources:
     - container: constituent_tools
       image: registry.gitlab.com/sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest
       endpoint: gl_registry
-      options: --network=host
       env:
         PG_DATABASE: $(PG_DATABASE)
         PG_HOST: $(PG_HOST)
