@@ -26,7 +26,7 @@ resources:
     - container: constituent_tools
       image: registry.gitlab.com/sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest
       endpoint: gl_registry
-      options: --entrypoint="/bin/cp"
+      options: --entrypoint="tail -f /dev/null"
       env:
         PG_DATABASE: $(PG_DATABASE)
         PG_HOST: $(PG_HOST)
