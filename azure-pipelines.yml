@@ -14,14 +14,6 @@ variables:
   - group: usvoters_pg
 resources:
   containers:
-    - container: mysqlforward
-      image: registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
-      endpoint: gl_registry
-      ports:
-      - 3306
-      # options: --dns 192.168.1.1
-      env:
-        DIGITALOCEAN_ACCESS_TOKEN: $(DIGITALOCEAN_ACCESS_TOKEN)
     - container: constituent_tools
       image: registry.gitlab.com/sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest
       endpoint: gl_registry
@@ -42,9 +34,12 @@ stages:
         container: constituent_tools
         services:
           mysqlforward:
-            image: mysqlforward
+            image: registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
+            endpoint: gl_registry
             ports:
             - 3306/tcp          
+            env:
+              DIGITALOCEAN_ACCESS_TOKEN: $(DIGITALOCEAN_ACCESS_TOKEN)
         strategy:
           runOnce:
             deploy:
