@@ -37,7 +37,7 @@ stages:
             image: registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
             endpoint: gl_registry
             ports:
-            - 3306:3306          
+            - localhost:3306:3306          
             env:
               DIGITALOCEAN_ACCESS_TOKEN: $(DIGITALOCEAN_ACCESS_TOKEN)
         strategy:
