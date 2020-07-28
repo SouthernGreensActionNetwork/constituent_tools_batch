@@ -5,7 +5,7 @@ steps:
     displayName: 'Run a one-line script'
   - script: |
       sleep 30
-      nc -zv mysqlforward 3300-3310
+      nc -zv localhost 3300-3310
       sleep 30
       nc -z -v -w50 mysqlforward 3306
       echo Add other tasks to build, test, and deploy your project.
