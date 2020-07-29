@@ -1,6 +1,18 @@
 ---
 steps:
   - checkout: self
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'gl_registry'
+      command: 'login'
+    displayName: Login to registry    
+  - task: Docker@2
+    displayName: run
+    inputs:
+      containerRegistry: gl_registry
+      repository: sgan/containers/core/jamjon3/kube_portforward_service:latest
+      command: run
+      arguments: --rm --network=host -d
   - script: echo Hello, world!
     displayName: 'Run a one-line script'
   - script: |
