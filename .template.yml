@@ -6,9 +6,11 @@ steps:
   - script: |
       sleep 30
       nc -zv 192.168.1.25 3300-3310      
-      nc -zv 192.168.1.25 5430-5340
+      nc -zv 192.168.1.25 5432-5340
       nc -zv localhost 3300-3310
       sleep 30
+      nc -z -v -w50 192.168.1.25 3306
+      nc -z -v -w50 192.168.1.25 5432
       nc -z -v -w50 mysqlforward 3306
       echo Add other tasks to build, test, and deploy your project.
       echo See https://aka.ms/yaml
