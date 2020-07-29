@@ -28,7 +28,7 @@ stages:
     displayName: Open MySQL connection to SGAN cluster
     jobs:
       - job: do_sgan_myssql_fwd
-        pool: podman
+        pool: PodmanAgents
         displayName: Forward Port to MySQL on SGAN-DO
         steps:
           - task: Docker@2
@@ -65,7 +65,7 @@ stages:
     displayName: Close MySQL connection to SGAN cluster
     jobs:
       - job: do_sgan_myssql_fwd
-        pool: podman
+        pool: PodmanAgents
         displayName: Kill Forward Port to MySQL on SGAN-DO
         steps:
           - task: Docker@2
