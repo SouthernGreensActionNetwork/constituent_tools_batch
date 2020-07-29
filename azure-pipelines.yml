@@ -24,12 +24,12 @@ resources:
         PG_PASSWORD: $(PG_PASSWORD)
         PG_PORT: $(PG_PORT)
 stages:
-  - stage: RunConstituentToolsBatch
-    displayName: Run Constituent Tools Batch
+  - stage: openMySQLconnection
+    displayName: Open MySQL connection to SGAN cluster
     jobs:
-      - job: 
-        pool: PodmanAgents
-        displayName: Run Constituent Tools Batch
+      - job: do_sgan_myssql_fwd
+        pool: podman
+        displayName: Forward Port to MySQL on SGAN-DO
         steps:
           - task: Docker@2
             inputs:
@@ -42,7 +42,7 @@ stages:
               containerRegistry: gl_registry
               repository: sgan/containers/core/jamjon3/kube_portforward_service:latest
               command: run
-              arguments: --rm --network=host -d registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
+              arguments: --rm --name sganmysql --network=host -d registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
       - deployment: RunConstituentToolsBatch
         displayName: Run Constituent Tools Batch
         environment: digitalocean
@@ -61,3 +61,22 @@ stages:
             deploy:
               steps:
                 - template: .template.yml
+  - stage: closeMySQLconnection
+    displayName: Close MySQL connection to SGAN cluster
+    jobs:
+      - job: do_sgan_myssql_fwd
+        pool: podman
+        displayName: Kill Forward Port to MySQL on SGAN-DO
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'gl_registry'
+              command: 'login'
+            displayName: Login to registry    
+          - task: Docker@2
+            displayName: stop
+            inputs:
+              containerRegistry: gl_registry
+              repository: sgan/containers/core/jamjon3/kube_portforward_service:latest
+              command: stop
+              arguments: sganmysql
