@@ -42,7 +42,7 @@ stages:
               containerRegistry: gl_registry
               repository: sgan/containers/core/jamjon3/kube_portforward_service:latest
               command: run
-              arguments: --rm --network=host -d
+              arguments: --rm --network=host -d registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
       - deployment: RunConstituentToolsBatch
         displayName: Run Constituent Tools Batch
         environment: digitalocean
