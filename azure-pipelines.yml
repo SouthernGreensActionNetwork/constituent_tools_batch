@@ -17,7 +17,7 @@ resources:
     - container: constituent_tools
       image: registry.gitlab.com/sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest
       endpoint: gl_registry
-      options: --add-host pgdata:192.168.1.25 --add-host mysqlsgan:192.168.1.17
+      options: --add-host pgdata:$(PG_HOST) --add-host mysqlsgan:192.168.1.17
       volumes:
         - /run/media/jam/ADULT/VoterRegistration/Florida/2020.07.07:/data
       env:
