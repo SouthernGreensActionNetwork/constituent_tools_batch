@@ -4,7 +4,7 @@ steps:
   - script: echo Hello, world!
     displayName: 'Run a one-line script'
   - script: |
-      pyvotertools \
+      constituent_tools \
         --state florida \
         --action import \
         --type voter
