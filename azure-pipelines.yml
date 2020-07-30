@@ -1,7 +1,10 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+parameters:
+- name: export_path
+  displayName: Archive Date Selection
+  type: string
+  default: 2020.07.07
+  values:
+  - 2020.07.07
 
 trigger:
 - master
@@ -19,7 +22,7 @@ resources:
       endpoint: gl_registry
       options: --add-host pgdata:$(PG_HOST) --add-host mysqlsgan:192.168.1.17
       volumes:
-        - /run/media/jam/ADULT/VoterRegistration/Florida/2020.07.07:/data
+        - /run/media/jam/ADULT/VoterRegistration/Florida/${{ parameters.export_path }}:/data
       env:
         PG_USER: $(PG_USER)
         PG_DATABASE: $(PG_DATABASE)
