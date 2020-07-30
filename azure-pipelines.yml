@@ -21,6 +21,7 @@ resources:
       volumes:
         - /run/media/jam/ADULT/VoterRegistration/Florida/2020.07.07:/data
       env:
+        PG_USER: $(PG_USER)
         PG_DATABASE: $(PG_DATABASE)
         PG_HOST: $(PG_HOST)
         PG_PASSWORD: $(PG_PASSWORD)
