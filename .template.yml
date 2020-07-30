@@ -3,4 +3,7 @@ steps:
   - checkout: self
   - bash: |
       /dist/constituent_tools --state florida --action import --type voter
+      pwd
+      ls -all
+      ls /data -all
     displayName: 'Run the constituent tolls app'
