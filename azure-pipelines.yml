@@ -6,8 +6,7 @@ parameters:
   values:
   - 2020.07.07
 
-trigger:
-- master
+trigger: none
 
 pool: PodmanAgents
 variables:
