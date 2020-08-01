@@ -15,6 +15,7 @@ parameters:
   default: voter
   values:
   - voter
+  - history
 - name: export_path
   displayName: Archive Date Selection
   type: string
