@@ -1,14 +1,17 @@
 parameters:
 - name: state
   default: florida
+  displayName: Select state for processing
   values:
   - florida
   - georgia
 - name: action 
   default: import
+  displayName: Tool action
   values:
   - import
 - name: type
+  displayName: Select the data type for import
   default: voter
   values:
   - voter
