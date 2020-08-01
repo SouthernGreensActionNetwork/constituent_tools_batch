@@ -2,7 +2,7 @@
 steps:
   - checkout: self
   - bash: |
-      /dist/constituent_tools --state florida --action import --type voter
+      /dist/constituent_tools --state $(ctstate) --action $(ctaction) --type $(cttype)
       pwd
       ls -all
       ls /data -all

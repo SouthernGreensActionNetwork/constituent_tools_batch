@@ -1,4 +1,17 @@
 parameters:
+- name: state
+  default: florida
+  values:
+  - florida
+  - georgia
+- name: action 
+  default: import
+  values:
+  - import
+- name: type
+  default: voter
+  values:
+  - voter
 - name: export_path
   displayName: Archive Date Selection
   type: string
@@ -95,6 +108,12 @@ pool: PodmanAgents
 variables:
   - name: containerPath
     value: sgan/containers/core
+  - name: ctstate
+    value: ${{ parameters.state }}
+  - name: ctaction
+    value: ${{ parameters.action }}
+  - name: cttype
+    value: ${{ parameters.type }}
   - name: export_path
     value: ${{ parameters.export_path }}
   - group: DigitalOcean
@@ -114,25 +133,6 @@ resources:
         PG_PASSWORD: $(PG_PASSWORD)
         PG_PORT: $(PG_PORT)
 stages:
-  - stage: openMySQLconnection
-    displayName: Open MySQL connection to SGAN cluster
-    jobs:
-      - job: do_sgan_myssql_fwd
-        pool: PodmanAgents
-        displayName: Forward Port to MySQL on SGAN-DO
-        steps:
-          - task: Docker@2
-            inputs:
-              containerRegistry: 'gl_registry'
-              command: 'login'
-            displayName: Login to registry    
-          - task: Docker@2
-            displayName: run
-            inputs:
-              containerRegistry: gl_registry
-              repository: sgan/containers/core/jamjon3/kube_portforward_service:latest
-              command: run
-              arguments: --rm --name sganmysql --network=host -d registry.gitlab.com/sgan/containers/core/jamjon3/kube_portforward_service:latest
   - stage: importFLVoters
     displayName: Import Florida Voters
     jobs:
@@ -146,22 +146,3 @@ stages:
             deploy:
               steps:
                 - template: .template.yml
-  - stage: closeMySQLconnection
-    displayName: Close MySQL connection to SGAN cluster
-    jobs:
-      - job: do_sgan_myssql_fwd
-        pool: PodmanAgents
-        displayName: Kill Forward Port to MySQL on SGAN-DO
-        steps:
-          - task: Docker@2
-            inputs:
-              containerRegistry: 'gl_registry'
-              command: 'login'
-            displayName: Login to registry    
-          - task: Docker@2
-            displayName: stop
-            inputs:
-              containerRegistry: gl_registry
-              repository: sgan/containers/core/jamjon3/kube_portforward_service:latest
-              command: stop
-              arguments: sganmysql
