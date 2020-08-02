@@ -144,6 +144,42 @@ stages:
         displayName: Run Constituent Tools Batch
         environment: digitalocean
         pool: PodmanAgents
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: Docker@2
+                  inputs:
+                    containerRegistry: 'gl_registry'
+                    command: 'login'
+                  displayName: Login to registry    
+                - task: Docker@2
+                  displayName: stop
+                  inputs:
+                    containerRegistry: gl_registry
+                    repository: sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest
+                    command: run
+                    arguments: --add-host pgdata:$(PG_HOST) --add-host mysqlsgan:192.168.1.17 -e "PG_USER=$(PG_USER)" -e "PG_DATABASE=$(PG_DATABASE)" -e "PG_HOST=$(PG_HOST)" -e "PG_PASSWORD=$(PG_PASSWORD)" -e "PG_PORT=$(PG_PORT)" -v "/run/media/jam/ADULT1/VoterRegistration/Florida/$(export_path):/data" -d
+                # - bash: |
+                #     docker run -rm \
+                #       -name importFLVoters \
+                #       --add-host pgdata:$(PG_HOST) \
+                #       --add-host mysqlsgan:192.168.1.17 \
+                #       -e "PG_USER=$(PG_USER)" \
+                #       -e "PG_DATABASE=$(PG_DATABASE)" \
+                #       -e "PG_HOST=$(PG_HOST)" \
+                #       -e "PG_PASSWORD=$(PG_PASSWORD)" \
+                #       -e "PG_PORT=$(PG_PORT)" \
+                #       -v "/run/media/jam/ADULT1/VoterRegistration/Florida/$(export_path):/data" \
+                #       -d registry.gitlab.com/sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest \
+                #       --state $(ctstate) \
+                #       --action $(ctaction) \
+                #       --type $(cttype)
+                # - template: .template.yml
+      - deployment: RunConstituentToolsBatch
+        displayName: Run Constituent Tools Batch
+        environment: digitalocean
+        pool: PodmanAgents
         container: constituent_tools
         strategy:
           runOnce:
