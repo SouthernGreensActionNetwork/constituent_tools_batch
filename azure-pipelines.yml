@@ -129,7 +129,7 @@ resources:
       endpoint: gl_registry
       options: --add-host pgdata:$(PG_HOST) --add-host mysqlsgan:192.168.1.17
       volumes:
-        - /run/media/jam/ADULT/VoterRegistration/Florida/$(export_path):/data
+        - "/run/media/jam/ADULT/VoterRegistration/Florida/$(export_path):/data"
       env:
         PG_USER: $(PG_USER)
         PG_DATABASE: $(PG_DATABASE)
