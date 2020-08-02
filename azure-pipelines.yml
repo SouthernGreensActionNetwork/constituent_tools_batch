@@ -140,7 +140,7 @@ stages:
   - stage: importFLVotersDetached
     displayName: Import Florida Voters
     jobs:
-      - deployment: RunConstituentToolsBatch
+      - deployment: RunConstituentToolsBatchDetached
         displayName: Run Constituent Tools Batch
         environment: digitalocean
         pool: PodmanAgents
