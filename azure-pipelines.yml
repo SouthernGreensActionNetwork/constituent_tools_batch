@@ -137,7 +137,7 @@ resources:
         PG_PASSWORD: $(PG_PASSWORD)
         PG_PORT: $(PG_PORT)
 stages:
-  - stage: importFLVoters
+  - stage: importFLVotersDetached
     displayName: Import Florida Voters
     jobs:
       - deployment: RunConstituentToolsBatch
