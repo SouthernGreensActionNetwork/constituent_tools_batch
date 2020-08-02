@@ -154,12 +154,20 @@ stages:
                     command: 'login'
                   displayName: Login to registry    
                 - task: Docker@2
-                  displayName: stop
+                  displayName: run
                   inputs:
                     containerRegistry: gl_registry
                     repository: sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest
                     command: run
-                    arguments: --add-host pgdata:$(PG_HOST) --add-host mysqlsgan:192.168.1.17 -e "PG_USER=$(PG_USER)" -e "PG_DATABASE=$(PG_DATABASE)" -e "PG_HOST=$(PG_HOST)" -e "PG_PASSWORD=$(PG_PASSWORD)" -e "PG_PORT=$(PG_PORT)" -v "/run/media/jam/ADULT1/VoterRegistration/Florida/$(export_path):/data" -d
+                    arguments: --rm --name ctools --add-host pgdata:$(PG_HOST) --add-host mysqlsgan:192.168.1.17 -e "PG_USER=$(PG_USER)" -e "PG_DATABASE=$(PG_DATABASE)" -e "PG_HOST=$(PG_HOST)" -e "PG_PASSWORD=$(PG_PASSWORD)" -e "PG_PORT=$(PG_PORT)" -v "/run/media/jam/ADULT1/VoterRegistration/Florida/$(export_path):/data" -d sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest --state $(ctstate) --action $(ctaction) --type $(cttype)
+
+                # - task: Docker@2
+                #   displayName: Run the import
+                #   inputs:
+                #     containerRegistry: gl_registry
+                #     repository: sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest
+                #     command: run
+                #     arguments: --add-host pgdata:$(PG_HOST) --add-host mysqlsgan:192.168.1.17 -e "PG_USER=$(PG_USER)" -e "PG_DATABASE=$(PG_DATABASE)" -e "PG_HOST=$(PG_HOST)" -e "PG_PASSWORD=$(PG_PASSWORD)" -e "PG_PORT=$(PG_PORT)" -v "/run/media/jam/ADULT1/VoterRegistration/Florida/$(export_path):/data" -d
                 # - bash: |
                 #     docker run -rm \
                 #       -name importFLVoters \
