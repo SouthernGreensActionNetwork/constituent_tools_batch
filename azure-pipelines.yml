@@ -154,7 +154,7 @@ stages:
                     command: 'login'
                   displayName: Login to registry    
                 - task: Docker@2
-                  displayName: run
+                  displayName: run the constituent_tools_container for importing data
                   inputs:
                     containerRegistry: gl_registry
                     repository: sgan/containers/core/gulfcoastgreens/constituent_tools_container:latest
